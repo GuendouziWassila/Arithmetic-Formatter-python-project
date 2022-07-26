@@ -1,12 +1,12 @@
 import re
 
 
-def arithmetic_arranger(arithProblems, bool):
-    '''for each element in the list "arithProblems" (each problem) we will retreive in differents lists  the right operands,         the left ones, the operators and the results (if bool is true) and then print them in the appropriate format
+def arithmetic_arranger(arithProblems, bool=False):
+    '''for each element in the list "arithProblems" (each problem) we will         retreive in differents lists  the right operands,         the left ones,      the operators and the results (if bool is true) and then print them in       the appropriate format
     '''
     try:
         if (len(arithProblems) > 5):
-            raise Exception("Error: Too many problems")
+            raise Exception("Error: Too many problems.")
 
         rightOps = []
         leftOps = []
@@ -20,10 +20,10 @@ def arithmetic_arranger(arithProblems, bool):
 
             #check the constraints
             if (len(list) != 3):
-                raise Exception("Error: the syntax is not correct")
+                raise Exception("Error: the syntax is not correct.")
 
             if (list[1] != '+' and list[1] != '-'):
-                raise Exception("Error: Operator must be '+' or '-'")
+                raise Exception("Error: Operator must be '+' or '-'.")
 
             t1 = re.search('[^0-9]', list[0])
             t2 = re.search('[^0-9]', list[2])
@@ -32,7 +32,7 @@ def arithmetic_arranger(arithProblems, bool):
 
             if (len(list[0]) > 4 or len(list[2]) > 4):
                 raise Exception(
-                    "Error: Numbers cannot be more than four digits")
+                    "Error: Numbers cannot be more than four digits.")
 
             leftOps.append(list[0])
             rightOps.append(list[2])
@@ -63,12 +63,12 @@ def arithmetic_arranger(arithProblems, bool):
             displayLine1 = displayLine1 + leftOps[i]
             for _ in range(len(leftOps[i])):
                 displaydashes = displaydashes + '-'
-
-            displayLine1 = displayLine1 + '    '  # 4 spaces
-            displaydashes = displaydashes + '    '  # 4 spaces
+            if i != len(leftOps) - 1:
+                displayLine1 = displayLine1 + '    '  # 4 spaces
+                displaydashes = displaydashes + '    '  # 4 spaces
             i = i + 1
 
-        #FOR LOOP TO CONSTRUCT TH6E SECOND HORIZONTAL LINE
+        #FOR LOOP TO CONSTRUCT THE SECOND HORIZONTAL LINE
         for i in range(len(rightOps)):
 
             displayLine2 = displayLine2 + operators[i] + ' '  # with 1 space
@@ -79,7 +79,8 @@ def arithmetic_arranger(arithProblems, bool):
                     displayLine2 = displayLine2 + ' '
 
             displayLine2 = displayLine2 + rightOps[i]
-            displayLine2 = displayLine2 + '    '  # with 4 space
+            if i != len(rightOps) - 1:
+                displayLine2 = displayLine2 + '    '  # with 4 space
             i = i + 1
 
         # ANOTHER FOR LOOP TO CONSTRUCT THE HORIZONTAL LINE THAT REPRESENTS RESULTS
@@ -95,13 +96,17 @@ def arithmetic_arranger(arithProblems, bool):
                 else:
                     displayresults = displayresults + '  ' + results[
                         i]  # Add 2 spaces
-
-                displayresults = displayresults + '    '  #4spaces
+                if i != len(results) - 1:
+                    displayresults = displayresults + '    '  #4spaces
                 i = i + 1
 
         # the final display
-        print(displayLine1 + '\n' + displayLine2 + '\n' + displaydashes +
-              '\n' + displayresults)
+        if (bool):
+            f = displayLine1 + '\n' + displayLine2 + '\n' + displaydashes + '\n' + displayresults
+        else:
+            f = displayLine1 + '\n' + displayLine2 + '\n' + displaydashes
 
     except Exception as e:
-        print(e)
+        return str(e)
+
+    return f
